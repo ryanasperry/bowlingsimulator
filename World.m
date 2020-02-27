@@ -5,6 +5,7 @@ classdef World < handle
         plotProgress;
         timestep = .01;
         momentum  = 0;
+        iterations = 0;
     end
     methods
         function obj = World(ballPosition, ballVelocity, plot)
@@ -90,9 +91,11 @@ classdef World < handle
             end
             obj.momentum(length(obj.momentum) + 1) = sum(m);
             if obj.plotProgress
-                obj.visualize();
-                drawnow;
-                %pause(obj.timestep);
+                if rem(obj.iterations,5) == 0
+                    obj.visualize();
+                    drawnow;
+                end
+                %pause(.5);
             end
         end
     end
