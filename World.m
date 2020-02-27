@@ -4,6 +4,7 @@ classdef World < handle
         ball Disc
         plotProgress;
         timestep = .01;
+        momentum  = 0;
     end
     methods
         function obj = World(ballPosition, ballVelocity, plot)
@@ -84,9 +85,14 @@ classdef World < handle
                     obj.pins(i).velocity = c2*(v2-(2*m1/(m1+m2))*dot(v2-v1,x2-x1)/norm(x2-x1)^2*(x2-x1));
                 end
             end
+            for i = 1:10
+                m(i) = obj.pins(i).mass*norm(obj.pins(i).velocity);
+            end
+            obj.momentum(length(obj.momentum) + 1) = sum(m);
             if obj.plotProgress
                 obj.visualize();
-                pause(obj.timestep);
+                drawnow;
+                %pause(obj.timestep);
             end
         end
     end
