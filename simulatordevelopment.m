@@ -18,8 +18,8 @@ ub = [1, 1];
 %[xstar, F] = fminsearch(@objectiveFcn,x0)
 %%
 
-x1 = -1:.5:1;
-x2 = -1:.5:1;
+x1 = -1:.1:1;
+x2 = -1:.1:1;
 [x, y] = meshgrid(x1,x2);
 z = x*0;
 for i = 1:length(x1)
