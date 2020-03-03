@@ -6,6 +6,7 @@ classdef World < handle
         timestep = .01;
         momentum  = 0;
         iterations = 0;
+        displacement = zeros(1,10);
     end
     methods
         function obj = World(ballPosition, ballVelocity, plot)
@@ -40,11 +41,13 @@ classdef World < handle
             plot([-.762,-.762],[-.5,1],'k')
             axis equal
             hold off
-         end
+        end
         function update(obj)
             for i = 1:10
                 obj.pins(i).velocity = update_velocity(obj.pins(i), obj.timestep);
-                obj.pins(i).position = update_position(obj.pins(i), obj.timestep);
+                newpos= update_position(obj.pins(i), obj.timestep);
+                obj.displacement(i) = obj.displacement(i) + abs(norm(newpos - obj.pins(i).position));
+                obj.pins(i).position = newpos;
             end
             obj.ball.velocity = update_velocity(obj.ball, obj.timestep);
             obj.ball.position = update_position(obj.ball, obj.timestep);
@@ -87,7 +90,7 @@ classdef World < handle
                 end
             end
             for i = 1:10
-                m(i) = obj.pins(i).mass^10*norm(obj.pins(i).velocity);
+                m(i) = obj.pins(i).mass^500*norm(obj.pins(i).velocity);
             end
             obj.momentum(length(obj.momentum) + 1) = sum(m);
             if obj.plotProgress
