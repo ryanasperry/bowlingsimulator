@@ -3,7 +3,7 @@ classdef World < handle
         pins Disc
         ball Disc
         plotProgress;
-        timestep = .01;
+        timestep = .005;
         momentum  = 0;
         iterations = 0;
         displacement = zeros(1,10);
@@ -39,6 +39,8 @@ classdef World < handle
             plot(x,y,'b');
             plot([.762,.762],[-.5,1],'k')
             plot([-.762,-.762],[-.5,1],'k')
+            plot([-.52705,-.52705],[-.5,1],'k')
+            plot([.52705,.52705],[-.5,1],'k')
             axis equal
             hold off
         end
@@ -52,12 +54,16 @@ classdef World < handle
             obj.ball.velocity = update_velocity(obj.ball, obj.timestep);
             obj.ball.position = update_position(obj.ball, obj.timestep);
             for i = 1:10
-                if abs(obj.pins(i).position(1)) + obj.pins(i).radius > .762
+                if abs(obj.pins(i).position(1))> .52705
+                    sgn = sign(obj.pins(i).position(1));
+                    obj.pins(i).position = [sgn*.7015,obj.pins(i).position(2)];
                     obj.pins(i).velocity = [0, sqrt(obj.pins(i).velocity(2)^2+obj.pins(i).velocity(1)^2)];
                 end
             end
-            if abs(obj.ball.position(1)) + obj.ball.radius > .762
-                obj.ball.velocity = [0, sqrt(obj.ball.velocity(2)^2+obj.ball.velocity(1)^2)];
+            if abs(obj.ball.position(1)) > .52705 || obj.ball.position(2) > .85
+                sgn = sign(obj.ball.position(1));
+                obj.ball.position = [sgn*.65405,0];
+                obj.ball.velocity = [0, 0];
             end
             for i = 1:10
                 for j = i+1:10

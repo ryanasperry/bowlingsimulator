@@ -22,9 +22,15 @@ x1 = -1:.05:1;
 x2 = 0:.05:1;
 [x, y] = meshgrid(x1,x2);
 z = x*0;
+k = 1;
 for i = 1:length(x2)
     for j = 1:length(x1)
         [z(i,j),~] = objectiveFcn([x(i,j),y(i,j)]);
+        [c, ~] = constraints([x(i,j),y(i,j)]);
+        if max(c)<0
+             strike(k,:) = [i,j];
+             k = k+1;
+        end
     end
 end
 surf(x*15, y*.7, z)
@@ -43,7 +49,7 @@ for i = 1:5
     x0 = xstar;
 end
 
- [xstar, val, exitflag] = fmincon(@rosen,[2,2],[],[],[],[],[],[],@cons)
+ %[xstar, val, exitflag] = fmincon(@rosen,[2,2],[],[],[],[],[],[],@cons)
 function F = rosen(x)
 F = (1-x(1))^2 + 100*(x(2)-x(1)^2)^2;
 end
