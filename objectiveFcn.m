@@ -9,6 +9,6 @@ world = World([position, -.25], velocity, 0); %change to 1 to show simulation
 for i = 1:100
     world.update();
 end
-J = -sum(world.momentum);
+J = -log(sum(world.momentum));
 d = world.displacement;
 end
