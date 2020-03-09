@@ -90,6 +90,7 @@ classdef World < handle
                 end
             end
             for i = 1:10
+                %m(i) = log(norm(obj.pins(i).velocity));
                 m(i) = obj.pins(i).mass*norm(obj.pins(i).velocity);
             end
             obj.momentum(length(obj.momentum) + 1) = sum(m);
