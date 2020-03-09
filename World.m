@@ -53,11 +53,11 @@ classdef World < handle
             obj.ball.position = update_position(obj.ball, obj.timestep);
             for i = 1:10
                 if abs(obj.pins(i).position(1)) + obj.pins(i).radius > .762
-                    obj.pins(i).velocity = [-obj.pins(i).velocity(1)*obj.pins(i).cRes, obj.pins(i).velocity(2)];
+                    obj.pins(i).velocity = [0, sqrt(obj.pins(i).velocity(2)^2+obj.pins(i).velocity(1)^2)];
                 end
             end
             if abs(obj.ball.position(1)) + obj.ball.radius > .762
-                obj.ball.velocity = [-obj.ball.velocity(1)*obj.ball.cRes, obj.ball.velocity(2)];
+                obj.ball.velocity = [0, sqrt(obj.ball.velocity(2)^2+obj.ball.velocity(1)^2)];
             end
             for i = 1:10
                 for j = i+1:10
