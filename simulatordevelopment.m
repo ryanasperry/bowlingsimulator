@@ -10,8 +10,8 @@ for i = 1:1
     world.update();
 end
 %%
-options = optimset('Display','iter','ObjectiveLimit',-6e150);
-x0 = [0, .3];
+options = optimset('Display','iter');
+x0 = [-.95, .55];
 lb = [-1, 0];
 ub = [1, 1];
 [xstar, F] = fmincon(@objectiveFcn,x0,[],[], [],[],lb,ub,@constraints,options)
@@ -33,11 +33,15 @@ for i = 1:length(x2)
         end
     end
 end
-surf(x*15, y*.7, z)
+surf(x*10, y*.52705, z)
 xlabel('Angle')
 ylabel('Path')
 zlabel('Objective Function')
 
+%%
+for i = 1:length(strike)
+    vals(i) = objectiveFcn([x(strike(i,1),strike(i,2)),y(strike(i,1),strike(i,2))]);
+end
 
 %%
 Fpenalty = @(x,mu) objectiveFcn(x)+mu/2*sum(max(0,constraints(x)));
