@@ -11,11 +11,11 @@ for i = 1:1
 end
 %%
 options = optimset('Display','iter');
-x0 = [-.95, .55];
+x0 = [0, .5];
 lb = [-1, 0];
 ub = [1, 1];
-[xstar, F] = fmincon(@objectiveFcn,x0,[],[], [],[],lb,ub,@constraints,options)
-%[xstar, F] = fminsearch(@objectiveFcn,x0,options)
+%[xstar, F] = fmincon(@objectiveFcn,x0,[],[], [],[],lb,ub,@constraints,options)
+[xstar, F] = fminsearch(@objectiveFcn,x0,options)
 %%
 
 x1 = -1:.05:1;
