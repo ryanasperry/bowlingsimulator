@@ -18,8 +18,8 @@ ub = [1, 1];
 %[xstar, F] = fminsearch(@objectiveFcn,x0,options)
 %%
 
-x1 = -1:.05:1;
-x2 = 0:.05:1;
+x1 = -1:.01:1;
+x2 = 0:.01:1;
 [x, y] = meshgrid(x1,x2);
 z = x*0;
 k = 1;
@@ -33,14 +33,17 @@ for i = 1:length(x2)
         end
     end
 end
-surf(x*10, y*.52705, z)
+surf(x*10, y*.52705, atan(z))
 xlabel('Angle')
 ylabel('Path')
 zlabel('Objective Function')
+zlim([-1.6,-1.4])
 
 %%
 for i = 1:length(strike)
     vals(i) = objectiveFcn([x(strike(i,1),strike(i,2)),y(strike(i,1),strike(i,2))]);
+    hold on
+    plot3(x(strike(i,1),strike(i,2))*10,y(strike(i,1),strike(i,2))*.52705,vals(i),'o');
 end
 
 %%
