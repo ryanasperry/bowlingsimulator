@@ -3,7 +3,7 @@ classdef World < handle
         pins Disc
         ball Disc
         plotProgress;
-        timestep = .005;
+        timestep = .0005;
         momentum  = 0;
         iterations = 0;
         displacement = zeros(1,10);
@@ -30,7 +30,7 @@ classdef World < handle
             obj.plotProgress = plot;
         end
         function visualize(obj)
-            for i = 1:10
+            for i = 1:length(obj.pins)
                 [x, y] = plot_circle(obj.pins(i).position, obj.pins(i).radius);
                 plot(x,y,'r');
                 hold on
@@ -45,7 +45,7 @@ classdef World < handle
             hold off
         end
         function update(obj)
-            for i = 1:10
+            for i = 1:length(obj.pins)
                 obj.pins(i).velocity = update_velocity(obj.pins(i), obj.timestep);
                 newpos= update_position(obj.pins(i), obj.timestep);
                 obj.displacement(i) = obj.displacement(i) + abs(norm(newpos - obj.pins(i).position));
@@ -53,20 +53,20 @@ classdef World < handle
             end
             obj.ball.velocity = update_velocity(obj.ball, obj.timestep);
             obj.ball.position = update_position(obj.ball, obj.timestep);
-            for i = 1:10
+            for i = 1:length(obj.pins)
                 if abs(obj.pins(i).position(1))> .52705
                     sgn = sign(obj.pins(i).position(1));
                     obj.pins(i).position = [sgn*.7015,obj.pins(i).position(2)];
                     obj.pins(i).velocity = [0, sqrt(obj.pins(i).velocity(2)^2+obj.pins(i).velocity(1)^2)];
                 end
             end
-            if abs(obj.ball.position(1)) > .52705 || obj.ball.position(2) > .85
+            if abs(obj.ball.position(1)) > .52705 || obj.ball.position(2) > .95
                 sgn = sign(obj.ball.position(1));
                 obj.ball.position = [sgn*.65405,0];
                 obj.ball.velocity = [0, 0];
             end
-            for i = 1:10
-                for j = i+1:10
+            for i = 1:length(obj.pins)
+                for j = i+1:length(obj.pins)
                     if check_collisions(obj.pins(i), obj.pins(j))
                         m1 = obj.pins(j).mass;
                         m2 = obj.pins(i).mass;
@@ -81,7 +81,7 @@ classdef World < handle
                     end
                 end
             end
-            for i = 1:10
+            for i = 1:length(obj.pins)
                 if check_collisions(obj.ball, obj.pins(i))
                     m1 = obj.ball.mass;
                     m2 = obj.pins(i).mass;
@@ -95,7 +95,7 @@ classdef World < handle
                     obj.pins(i).velocity = c2*(v2-(2*m1/(m1+m2))*dot(v2-v1,x2-x1)/norm(x2-x1)^2*(x2-x1));
                 end
             end
-            for i = 1:10
+            for i = 1:length(obj.pins)
                 %m(i) = log(norm(obj.pins(i).velocity));
                 m(i) = obj.pins(i).mass*norm(obj.pins(i).velocity);
             end

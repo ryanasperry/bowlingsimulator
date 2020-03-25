@@ -23,7 +23,12 @@ x2 = 0:.01:1;
 [x, y] = meshgrid(x1,x2);
 z = x*0;
 k = 1;
+total = length(x1)*length(x2);
+tic
 for i = 1:length(x2)
+    t = toc;
+    minutes = t/60*(length(x2)-i+1)
+    tic
     for j = 1:length(x1)
         [z(i,j),~] = objectiveFcn([x(i,j),y(i,j)]);
         [c, ~] = constraints([x(i,j),y(i,j)]);
@@ -33,11 +38,10 @@ for i = 1:length(x2)
         end
     end
 end
-surf(x*10, y*.52705, atan(z))
+surf(x*10, y*.52705, z)
 xlabel('Angle')
 ylabel('Path')
 zlabel('Objective Function')
-zlim([-1.6,-1.4])
 
 %%
 for i = 1:length(strike)
