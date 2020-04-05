@@ -9,7 +9,7 @@ classdef World < handle
         displacement = zeros(1,10);
     end
     methods
-        function obj = World(ballPosition, ballVelocity, plot)
+        function obj = World(ballPosition, ballVelocity, ballMass, plot)
             x = 0.153162;
             y = 0.263525;
             locations = [0, 0;
@@ -26,7 +26,7 @@ classdef World < handle
             for i = 1:10
                 obj.pins(i) = Disc(1.5, .121/2, locations(i,:), [0, 0]);
             end
-            obj.ball = Disc(6.35, .2159/2, ballPosition, ballVelocity);
+            obj.ball = Disc(ballMass, .2159/2, ballPosition, ballVelocity);
             obj.plotProgress = plot;
         end
         function visualize(obj)
