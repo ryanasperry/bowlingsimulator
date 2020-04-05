@@ -3,7 +3,7 @@ classdef World < handle
         pins Disc
         ball Disc
         plotProgress;
-        timestep = .0005;
+        timestep = .005;
         momentum  = 0;
         iterations = 0;
         displacement = zeros(1,10);
