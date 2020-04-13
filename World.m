@@ -97,7 +97,7 @@ classdef World < handle
             end
             for i = 1:length(obj.pins)
                 %m(i) = log(norm(obj.pins(i).velocity));
-                m(i) = obj.pins(i).mass*norm(obj.pins(i).velocity);
+                m(i) = obj.pins(i).mass*norm(obj.pins(i).velocity)^2;
             end
             obj.momentum(length(obj.momentum) + 1) = sum(m);
             if obj.plotProgress

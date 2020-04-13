@@ -10,6 +10,6 @@ numberofSteps = 50+(1-x(4))*300;
 for i = 1:numberofSteps
     world.update();
 end
-J = (mass*speed)/world.momentum(length(world.momentum))^2;
+J = (mass*speed^2)/world.momentum(length(world.momentum));
 d = world.displacement;
 end
